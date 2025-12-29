@@ -18,3 +18,13 @@ const updatePost = (id, update) => {
     console.log("Post não encontrado!");
   }
 };
+
+const deletePost = (id) => {
+    const index = contents.findIndex(post => post.id === id);
+    if(index !== -1) {
+        contents.splice(index, 1);
+        console.log("Post deletado!")
+    } else {
+        console.log("Post não encontrado!");
+    }
+};
