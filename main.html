@@ -6,6 +6,23 @@
     <title>Document</title>
 </head>
 <body>
+    <header>
+        <div id="userInfo">
+            <span>icon</span>
+            <span>name</span>
+        </div>
+        <button id="addPostBtn" onclick="showPopUp()">Adicionar post</button>
+    </header>
+
+    <div id="popUpToAddPost" style="display: none;">
+        <label for="postTitle">Título do post</label>
+        <input type="text" name="postTitle" id="postTitle" spellcheck="false" autocapitalize="none" autocomplete="off" placeholder="Digite o título do post">
+        <label for="postContent">Conteúdo</label>
+        <input type="text" name="postContent" id="postContent" spellcheck="false" autocapitalize="none" autocomplete="off" placeholder="Digite o conteúdo">
+    </div>
+
+    <main></main>
+    
     <script src="main.js"></script>
 </body>
 </html>

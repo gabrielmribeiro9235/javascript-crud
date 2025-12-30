@@ -39,3 +39,8 @@ const submitLogin = () => {
     window.location.href = "./main.html";
   });
 }
+
+const showPopUp = () => {
+  const div = document.getElementById("popUpToAddPost");
+  div.style.display = "block";
+}
