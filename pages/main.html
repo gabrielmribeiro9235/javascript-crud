@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../css/mainStyle.css">
 </head>
 <body>
     <header>
@@ -14,7 +15,7 @@
         <button id="addPostBtn" onclick="showPopUp()">Adicionar post</button>
     </header>
 
-    <div id="popUpToAddPost" style="display: none;">
+    <div id="popUpToAddPost">
         <label for="postTitle">Título do post</label>
         <input type="text" name="postTitle" id="postTitle" spellcheck="false" autocapitalize="none" autocomplete="off" placeholder="Digite o título do post">
         <label for="postContent">Conteúdo</label>
@@ -22,7 +23,7 @@
     </div>
 
     <main></main>
-    
-    <script src="main.js"></script>
+
+    <script src="../js/main.js"></script>
 </body>
 </html>
