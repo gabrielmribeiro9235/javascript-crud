@@ -30,7 +30,10 @@ const deletePost = (id) => {
   }
 };
 
-const showPopUp = () => {
+document.getElementById("addPostBtn").addEventListener("click", event => {
   const div = document.getElementById("popUpToAddPost");
-  div.style.display = "block";
-}
+  div.classList.remove();
+  div.classList.add("showPopUp")
+  const header = document.querySelector("header");
+  header.style.display = "none";
+});

@@ -12,14 +12,21 @@
             <span>icon</span>
             <span>name</span>
         </div>
-        <button id="addPostBtn" onclick="showPopUp()">Adicionar post</button>
+        <button id="addPostBtn">+ Novo Post</button>
     </header>
 
-    <div id="popUpToAddPost">
-        <label for="postTitle">Título do post</label>
-        <input type="text" name="postTitle" id="postTitle" spellcheck="false" autocapitalize="none" autocomplete="off" placeholder="Digite o título do post">
-        <label for="postContent">Conteúdo</label>
-        <input type="text" name="postContent" id="postContent" spellcheck="false" autocapitalize="none" autocomplete="off" placeholder="Digite o conteúdo">
+    <div class="popUp">
+        <div id="popUpToAddPost" class="popUpHidden">
+            <h1>Novo Post</h1>
+
+            <label for="postTitle">Título do Post</label>
+            <input type="text" name="postTitle" id="postTitle" spellcheck="false" autocapitalize="none" autocomplete="off" placeholder="Digite o título do post">
+            
+            <label for="postContent">Conteúdo</label>
+            <textarea type="text" name="postContent" id="postContent" rows="5" cols="40" placeholder="Digite o conteúdo do post"></textarea>
+
+            <button id="addPost">Adicionar Post</button>
+        </div>
     </div>
 
     <main></main>
