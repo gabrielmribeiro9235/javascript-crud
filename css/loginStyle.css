@@ -1,5 +1,6 @@
 body {
     margin: 0;
+    padding: 0;
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     justify-content: center;
@@ -8,12 +9,12 @@ body {
     overflow: hidden;
     background: black;
     color: white;
+    transform: scale(1.25);
 }
 
 main {
-    background-color: rgba(255, 255, 255, 0.079);
-    backdrop-filter: blur(500px);
-    padding: 90px 60px;
+    background-color: rgba(255, 255, 255, 0.08);
+    padding: 60px;
     border: 5px solid rgb(255, 255, 255);
     border-radius: 40px;
 }
@@ -32,6 +33,7 @@ form {
 
 label{
     text-indent: 10px;
+    font-weight: bold;
 }
 
 .inputBox {
@@ -42,12 +44,24 @@ label{
     text-indent: 5px;
     outline: none;
     background-color: transparent;
+    color: white;
 }
 
 .enterBtn {
-    border: 1px solid rgb(255, 255, 255);
+    border: 2px solid rgb(255, 255, 255);
     border-radius: 20px;
     padding: 8px 0;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
     outline: none;
+}
+
+.enterBtn:hover {
+    background-color: transparent;
+    color: white;
+}
+
+.enterBtn:active {
+    transform: scale(0.95);
 }
