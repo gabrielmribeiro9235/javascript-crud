@@ -5,9 +5,58 @@ body {
 }
 
 header {
+    background-color: white;
+    box-sizing: border-box;
     display: flex;
     justify-content: space-between;
-    padding: 20px 50px;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 15px 30px;
+    width: 100%;
+    z-index: 1000;
+}
+
+#iconAndUserName {
+    display: flex;
+    gap: 10px;
+}
+
+#userInfo {
+    display: flex;
+    flex-direction: column;
+    margin-top: 3px;
+}
+
+.legendUserName {
+    font-size: 9px;
+    font-weight: 900;
+    color: blue;
+}
+
+.userName {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#addPostBtn {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: rgb(0, 94, 255);
+    color: white;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+#addPostBtn:hover {
+    background-color: blue;
+}
+
+#addPostBtn:active {
+    transform: scale(0.95);
 }
 
 .popUpHidden {
@@ -15,7 +64,7 @@ header {
 
 }
 
-.popUp {
+.showPopUp {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,7 +76,7 @@ h1 {
     text-align: center;
 }
 
-.showPopUp {
+.popUp {
     height: 400px;
     width: 350px;
     padding: 60px 80px;
@@ -60,10 +109,24 @@ label {
 
 #addPost {
     margin-top: 10px;
-    border: 1px solid black;
+    border: 1.5px solid white;
     border-radius: 20px;
     padding: 10px 20px;
     font-size: 16px;
     outline: none;
+    background-color: rgb(0, 94, 255);
+    color: white;
+    font-weight: 900;
     cursor: pointer;
+}
+
+#addPost:hover {
+    border: 1.5px solid rgb(0, 94, 255);
+    background-color: white;
+    color: rgb(0, 94, 255);
+    font-weight: 900;
+}
+
+#addPost:active {
+    transform: scale(0.98);
 }

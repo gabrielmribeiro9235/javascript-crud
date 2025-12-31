@@ -33,7 +33,13 @@ const deletePost = (id) => {
 document.getElementById("addPostBtn").addEventListener("click", event => {
   const div = document.getElementById("popUpToAddPost");
   div.classList.remove();
-  div.classList.add("showPopUp")
+  div.classList.add("showPopUp");
   const header = document.querySelector("header");
   header.style.display = "none";
 });
+
+const userName = JSON.parse(sessionStorage.getItem("user")).userName;
+const span = document.createElement("span");
+span.textContent = userName;
+span.classList.add("userName");
+document.getElementById("userInfo").append(span);
