@@ -44,12 +44,13 @@ window.addEventListener("popstate", (event) => {
   history.pushState("main", "", "main.html");
 });
 
-const addQrCodeToPage = (URL) => {
+const addQrCodeToPage = () => {
+  document.querySelector("main").innerHTML = ""
   contents.forEach((post) => {
     const div = document.createElement("div");
     div.id = post.id;
     const img = document.createElement("img");
-    img.src = URL;
+    img.src = post.content;
     div.innerHTML = `<h2>${post.title}</h2>`;
     div.append(img);
     document.querySelector("main").append(div); 
@@ -62,13 +63,13 @@ const getApi = async (post, title) => {
   const imgUrl = URL.createObjectURL(blob);
   createPost(userName, title, imgUrl);
   console.log(contents);
-  addQrCodeToPage(imgUrl);
+  addQrCodeToPage();
 };
 
 document.getElementById("addPost").addEventListener("click", () => {
   const title = document.getElementById("postTitle").value;
   const content = document.getElementById("postContent").value; 
-  getApi(content, title);
+  content && title ? getApi(content, title) : null;
   document.getElementById("postContent").value = "";
   document.getElementById("postTitle").value = "";
   const div = document.getElementById("popUpToAddPost");
