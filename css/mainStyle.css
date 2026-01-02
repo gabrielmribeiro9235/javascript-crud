@@ -130,3 +130,7 @@ label {
 #addPost:active {
     transform: scale(0.98);
 }
+
+main {
+    margin-top: 80px;
+}

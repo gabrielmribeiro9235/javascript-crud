@@ -32,7 +32,7 @@ const deletePost = (id) => {
 
 document.getElementById("addPostBtn").addEventListener("click", event => {
   const div = document.getElementById("popUpToAddPost");
-  div.classList.remove();
+  div.classList.remove("popUpHidden");
   div.classList.add("showPopUp");
   const header = document.querySelector("header");
   header.style.display = "none";
@@ -41,6 +41,31 @@ document.getElementById("addPostBtn").addEventListener("click", event => {
 
 window.addEventListener("popstate", (event) => {
   location.reload();
+  history.pushState("main", "", "main.html");
+});
+
+const getApi = async (post) => {
+  const response = await fetch(`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${post}`);
+  const blob = await response.blob();
+  const imgUrl = URL.createObjectURL(blob);
+  createPost(userName, imgUrl);
+  console.log(contents);
+  const img = document.createElement("img");
+  img.src = imgUrl;
+  const main = document.querySelector("main");
+  main.append(img);
+};
+
+document.getElementById("addPost").addEventListener("click", () => {
+  const content = document.getElementById("postContent").value; 
+  getApi(content);
+  document.getElementById("postContent").value = "";
+  document.getElementById("postTitle").value = "";
+  const div = document.getElementById("popUpToAddPost");
+  div.classList.remove("showPopUp");
+  div.classList.add("popUpHidden");
+  const header = document.querySelector("header");
+  header.style.display = "flex";
   history.pushState("main", "", "main.html");
 });
 
