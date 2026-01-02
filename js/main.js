@@ -1,8 +1,8 @@
 const contents = [];
 let nextId = 1;
 
-const createPost = (owner, content) => {
-  contents.push({ id: nextId++, owner: owner, content: content });
+const createPost = (owner, title, content) => {
+  contents.push({ id: nextId++, owner: owner, title: title, content: content });
 };
 
 const getPostById = (id) => {
@@ -44,21 +44,31 @@ window.addEventListener("popstate", (event) => {
   history.pushState("main", "", "main.html");
 });
 
-const getApi = async (post) => {
+const addQrCodeToPage = (URL) => {
+  contents.forEach((post) => {
+    const div = document.createElement("div");
+    div.id = post.id;
+    const img = document.createElement("img");
+    img.src = URL;
+    div.innerHTML = `<h2>${post.title}</h2>`;
+    div.append(img);
+    document.querySelector("main").append(div); 
+  });
+};
+
+const getApi = async (post, title) => {
   const response = await fetch(`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${post}`);
   const blob = await response.blob();
   const imgUrl = URL.createObjectURL(blob);
-  createPost(userName, imgUrl);
+  createPost(userName, title, imgUrl);
   console.log(contents);
-  const img = document.createElement("img");
-  img.src = imgUrl;
-  const main = document.querySelector("main");
-  main.append(img);
+  addQrCodeToPage(imgUrl);
 };
 
 document.getElementById("addPost").addEventListener("click", () => {
+  const title = document.getElementById("postTitle").value;
   const content = document.getElementById("postContent").value; 
-  getApi(content);
+  getApi(content, title);
   document.getElementById("postContent").value = "";
   document.getElementById("postTitle").value = "";
   const div = document.getElementById("popUpToAddPost");
