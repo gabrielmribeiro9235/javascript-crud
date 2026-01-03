@@ -52,10 +52,16 @@ const addQrCodeToPage = () => {
     contents.forEach((post) => {
       const div = document.createElement("div");
       div.id = post.id;
+      div.classList.add("postInPage")
+      const imageDiv = document.createElement("div");
+      imageDiv.id = "image";
+      const titleAndButtonsDiv = document.createElement("div");
+      titleAndButtonsDiv.id =  "titleAndButton";
       const img = document.createElement("img");
       img.src = post.content;
-      div.innerHTML = `<h2>${post.title}</h2>`;
-      div.append(img);
+      titleAndButtonsDiv.innerHTML = `<h2>${post.title}</h2>`;
+      imageDiv.append(img);
+      div.append(imageDiv, titleAndButtonsDiv);
       document.querySelector("main").append(div); 
       });
     } else {

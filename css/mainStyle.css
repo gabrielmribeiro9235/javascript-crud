@@ -138,6 +138,14 @@ main {
     right: 0;
     bottom: 0;
     margin: 0 30px;
+    display: flex;
+    gap: 30px;
+}
+
+.postInPage {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 #nothingWasPosted {
