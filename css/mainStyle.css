@@ -157,6 +157,10 @@ main {
     gap: 10px;
 }
 
+.postInPage:hover {
+    transform: scale(1.02);
+}
+
 #nothingWasPosted {
     position: absolute;
     top: 50%;
