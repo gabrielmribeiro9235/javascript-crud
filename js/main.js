@@ -32,6 +32,8 @@ const deletePost = (id) => {
 
 document.getElementById("addPostBtn").addEventListener("click", event => {
   const div = document.getElementById("popUpToAddPost");
+  const main = document.querySelector("main");
+  main.classList.add("popUpHidden")
   div.classList.remove("popUpHidden");
   div.classList.add("showPopUp");
   const header = document.querySelector("header");
@@ -45,16 +47,20 @@ window.addEventListener("popstate", (event) => {
 });
 
 const addQrCodeToPage = () => {
-  document.querySelector("main").innerHTML = ""
-  contents.forEach((post) => {
-    const div = document.createElement("div");
-    div.id = post.id;
-    const img = document.createElement("img");
-    img.src = post.content;
-    div.innerHTML = `<h2>${post.title}</h2>`;
-    div.append(img);
-    document.querySelector("main").append(div); 
-  });
+  if(contents.length !== 0) {
+    document.querySelector("main").innerHTML = "";
+    contents.forEach((post) => {
+      const div = document.createElement("div");
+      div.id = post.id;
+      const img = document.createElement("img");
+      img.src = post.content;
+      div.innerHTML = `<h2>${post.title}</h2>`;
+      div.append(img);
+      document.querySelector("main").append(div); 
+      });
+    } else {
+      document.querySelector("main").innerHTML = '<h1 id="nothingWasPosted">Nada foi postado ainda</h1>';
+    }
 };
 
 const getApi = async (post, title) => {
@@ -67,17 +73,24 @@ const getApi = async (post, title) => {
 };
 
 document.getElementById("addPost").addEventListener("click", () => {
+  const main = document.querySelector("main");
+  main.innerHTML = ""; // Gambiarra
   const title = document.getElementById("postTitle").value;
   const content = document.getElementById("postContent").value; 
-  content && title ? getApi(content, title) : null;
+  content && title ? getApi(content, title) : addQrCodeToPage();
   document.getElementById("postContent").value = "";
   document.getElementById("postTitle").value = "";
   const div = document.getElementById("popUpToAddPost");
+  main.classList.remove("popUpHidden");
   div.classList.remove("showPopUp");
   div.classList.add("popUpHidden");
   const header = document.querySelector("header");
   header.style.display = "flex";
   history.pushState("main", "", "main.html");
+});
+
+window.addEventListener("load", () => {
+  document.querySelector("main").innerHTML = '<h1 id="nothingWasPosted">Nada foi postado ainda</h1>';
 });
 
 const userName = JSON.parse(sessionStorage.getItem("user")).userName;
