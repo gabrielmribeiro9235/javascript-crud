@@ -57,9 +57,16 @@ const addQrCodeToPage = () => {
       imageDiv.id = "image";
       const titleAndButtonsDiv = document.createElement("div");
       titleAndButtonsDiv.id =  "titleAndButton";
+      const deleteButton = document.createElement("button");
+      const updateButton = document.createElement("button");
+      deleteButton.id = "deleteButton";
+      updateButton.id = "updateButon";
+      deleteButton.textContent = "Excluir";
+      updateButton.textContent = "Alterar";
       const img = document.createElement("img");
       img.src = post.content;
       titleAndButtonsDiv.innerHTML = `<h2>${post.title}</h2>`;
+      titleAndButtonsDiv.append(updateButton, deleteButton);
       imageDiv.append(img);
       div.append(imageDiv, titleAndButtonsDiv);
       document.querySelector("main").append(div); 
