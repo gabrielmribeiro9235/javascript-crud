@@ -10,13 +10,15 @@ const getPostById = (id) => {
   return foundPost || "Não encontrado!";
 };
 
-const updatePost = (id, update) => {
+const updatePost = (id, title, update) => {
   const foundPost = contents.find((post) => post.id === id);
   if (foundPost) {
+    foundPost.title = title;
     foundPost.content = update;
-    console.log("Atualizado com sucesso!");
+    addQrCodeToPage();
+    alert("Alteração feita com sucesso!")
   } else {
-    console.log("Post não encontrado!");
+    alert("Nada foi alterado!");
   }
 };
 
@@ -81,6 +83,27 @@ const addQrCodeToPage = () => {
         const postDiv = deleteButton.closest(".postInPage")
         deletePost(Number(postDiv.id));
       });
+      updateButton.addEventListener("click", async () => {
+        const postDiv = updateButton.closest(".postInPage");
+        const h2 = postDiv.querySelector("h2");
+        let newTitle = h2.textContent;
+        const changeTitle = confirm("Quer trocar o título?");
+        if(changeTitle) {
+          newTitle = prompt("Digite aqui o novo título:");
+        }
+        const changeContent = confirm("Quer trocar o conteúdo?");
+        if(changeContent) {
+          const newContent = prompt("Digite aqui o novo conteúdo:");
+          if(newContent) {
+            const newQrCode = await getApi(newContent, newTitle, true);
+            updatePost(Number(postDiv.id), newTitle, newQrCode);
+          }
+        } else {
+          if (newTitle !== h2.textContent) {
+            h2.textContent = newTitle;
+          }
+        }
+      });
       const buttons = document.createElement("div");
       buttons.id = "buttons";
       buttons.append(updateButton, deleteButton);
@@ -97,12 +120,16 @@ const addQrCodeToPage = () => {
     }
 };
 
-const getApi = async (post, title) => {
+const getApi = async (post, title, update = false) => {
   const response = await fetch(`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${post}`);
   const blob = await response.blob();
   const imgUrl = URL.createObjectURL(blob);
-  createPost(userName, title, imgUrl);
-  addQrCodeToPage();
+  if(update) {
+    return imgUrl;
+  } else {
+    createPost(userName, title, imgUrl);
+    addQrCodeToPage();
+  }  
 };
 
 document.getElementById("addPost").addEventListener("click", () => {
