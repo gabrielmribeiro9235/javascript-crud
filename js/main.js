@@ -7,8 +7,9 @@ span.classList.add("userName");
 document.getElementById("userInfo").append(span);
 
 
-const createPost = (owner, title, content, rawContent) => {
-  contents.push({ id: nextId++, owner: owner, title: title, content: content, rawContent: rawContent });
+const createPost = (id = null, owner, title, content, rawContent) => {
+  const postId = id ?? nextId++
+  contents.push({ id: postId, owner: owner, title: title, content: content, rawContent: rawContent });
   sessionStorage.setItem("nextId", nextId.toString());
   saveContens();
 };
@@ -117,14 +118,14 @@ const addQrCodeToPage = () => {
     }
 };
 
-const getApi = async (post, title, update = false) => {
+const getApi = async (post, title, update = false, id = null) => {
   const response = await fetch(`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${post}`);
   const blob = await response.blob();
   const imgUrl = URL.createObjectURL(blob);
   if(update) {
     return imgUrl;
   } else {
-    createPost(userName, title, imgUrl, post);
+    createPost(id, userName, title, imgUrl, post);
     addQrCodeToPage();
   }  
 };
@@ -171,10 +172,14 @@ window.addEventListener("load", () => {
   const saved = sessionStorage.getItem("contents");
   if(saved) {
     const parsed = JSON.parse(saved);
-    contents.length = 0;
-    parsed.forEach(post => {
-      getApi(post.rawContent, post.title)
-    });
+    if(parsed.length !== 0) {
+      contents.length = 0;
+      parsed.forEach(post => {
+        getApi(post.rawContent, post.title, false, post.id)
+      });
+    } else {
+      document.querySelector("main").innerHTML = '<h1 id="nothingWasPosted">Nada foi postado ainda</h1>'; 
+    }
   } else {
     document.querySelector("main").innerHTML = '<h1 id="nothingWasPosted">Nada foi postado ainda</h1>';
   }
