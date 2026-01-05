@@ -9,6 +9,7 @@ document.getElementById("userInfo").append(span);
 
 const createPost = (owner, title, content) => {
   contents.push({ id: nextId++, owner: owner, title: title, content: content });
+  saveContens();
 };
 
 const getPostById = (id) => {
@@ -21,6 +22,7 @@ const updatePost = (id, title, update) => {
   if (foundPost) {
     foundPost.title = title;
     foundPost.content = update;
+    saveContens();
     addQrCodeToPage();
     alert("Alteração feita com sucesso!")
   } else {
@@ -33,6 +35,7 @@ const deletePost = (id) => {
   const option = confirm("Tem certeza que quer excluir o post?");
   if (index !== -1 && option) {
     contents.splice(index, 1);
+    saveContens();
     addQrCodeToPage();
   } else {
     alert("Nada foi deletado!");
@@ -123,6 +126,10 @@ const getApi = async (post, title, update = false) => {
   }  
 };
 
+const saveContens = () => {
+  sessionStorage.setItem("contents", JSON.stringify(contents));
+};
+
 
 document.getElementById("addPostBtn").addEventListener("click", event => {
   const div = document.getElementById("popUpToAddPost");
@@ -158,5 +165,12 @@ window.addEventListener("popstate", (event) => {
 });
 
 window.addEventListener("load", () => {
-  document.querySelector("main").innerHTML = '<h1 id="nothingWasPosted">Nada foi postado ainda</h1>';
+  const saved = sessionStorage.getItem("contents");
+  if(saved) {
+    const parsed = JSON.parse(saved);
+    contents.push( ...parsed);
+    addQrCodeToPage();
+  } else {
+    document.querySelector("main").innerHTML = '<h1 id="nothingWasPosted">Nada foi postado ainda</h1>';
+  }
 });
