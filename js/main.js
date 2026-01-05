@@ -22,11 +22,12 @@ const updatePost = (id, update) => {
 
 const deletePost = (id) => {
   const index = contents.findIndex((post) => post.id === id);
-  if (index !== -1) {
+  const option = confirm("Tem certeza que quer excluir o post?");
+  if (index !== -1 && option) {
     contents.splice(index, 1);
-    console.log("Post deletado!");
+    addQrCodeToPage();
   } else {
-    console.log("Post não encontrado!");
+    alert("Nada foi deletado!");
   }
 };
 
@@ -76,6 +77,10 @@ const addQrCodeToPage = () => {
         </svg>
       </span>
       <span>Alterar</span>`;
+      deleteButton.addEventListener("click", () => {
+        const postDiv = deleteButton.closest(".postInPage")
+        deletePost(Number(postDiv.id));
+      });
       const buttons = document.createElement("div");
       buttons.id = "buttons";
       buttons.append(updateButton, deleteButton);
@@ -97,7 +102,6 @@ const getApi = async (post, title) => {
   const blob = await response.blob();
   const imgUrl = URL.createObjectURL(blob);
   createPost(userName, title, imgUrl);
-  console.log(contents);
   addQrCodeToPage();
 };
 
