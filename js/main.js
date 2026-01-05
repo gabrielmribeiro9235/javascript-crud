@@ -1,5 +1,5 @@
 const contents = [];
-let nextId = 1;
+let nextId = Number(sessionStorage.getItem("nextId")) || 1;
 const userName = JSON.parse(sessionStorage.getItem("user")).userName;
 const span = document.createElement("span");
 span.textContent = userName;
@@ -7,8 +7,9 @@ span.classList.add("userName");
 document.getElementById("userInfo").append(span);
 
 
-const createPost = (owner, title, content) => {
-  contents.push({ id: nextId++, owner: owner, title: title, content: content });
+const createPost = (owner, title, content, rawContent) => {
+  contents.push({ id: nextId++, owner: owner, title: title, content: content, rawContent: rawContent });
+  sessionStorage.setItem("nextId", nextId.toString());
   saveContens();
 };
 
@@ -17,11 +18,12 @@ const getPostById = (id) => {
   return foundPost || "Não encontrado!";
 };
 
-const updatePost = (id, title, update) => {
+const updatePost = (id, title, update, newContent) => {
   const foundPost = contents.find((post) => post.id === id);
   if (foundPost) {
     foundPost.title = title;
     foundPost.content = update;
+    foundPost.rawContent = newContent
     saveContens();
     addQrCodeToPage();
     alert("Alteração feita com sucesso!")
@@ -37,8 +39,6 @@ const deletePost = (id) => {
     contents.splice(index, 1);
     saveContens();
     addQrCodeToPage();
-  } else {
-    alert("Nada foi deletado!");
   }
 };
 
@@ -90,11 +90,14 @@ const addQrCodeToPage = () => {
           const newContent = prompt("Digite aqui o novo conteúdo:");
           if(newContent) {
             const newQrCode = await getApi(newContent, newTitle, true);
-            updatePost(Number(postDiv.id), newTitle, newQrCode);
+            updatePost(Number(postDiv.id), newTitle, newQrCode, newContent);
           }
         } else {
           if (newTitle !== h2.textContent) {
             h2.textContent = newTitle;
+            const foundPost = contents.find(post => post.id === Number(postDiv.id));
+            foundPost.title = newTitle;
+            saveContens();
           }
         }
       });
@@ -121,7 +124,7 @@ const getApi = async (post, title, update = false) => {
   if(update) {
     return imgUrl;
   } else {
-    createPost(userName, title, imgUrl);
+    createPost(userName, title, imgUrl, post);
     addQrCodeToPage();
   }  
 };
@@ -168,8 +171,10 @@ window.addEventListener("load", () => {
   const saved = sessionStorage.getItem("contents");
   if(saved) {
     const parsed = JSON.parse(saved);
-    contents.push( ...parsed);
-    addQrCodeToPage();
+    contents.length = 0;
+    parsed.forEach(post => {
+      getApi(post.rawContent, post.title)
+    });
   } else {
     document.querySelector("main").innerHTML = '<h1 id="nothingWasPosted">Nada foi postado ainda</h1>';
   }
