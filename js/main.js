@@ -1,5 +1,11 @@
 const contents = [];
 let nextId = 1;
+const userName = JSON.parse(sessionStorage.getItem("user")).userName;
+const span = document.createElement("span");
+span.textContent = userName;
+span.classList.add("userName");
+document.getElementById("userInfo").append(span);
+
 
 const createPost = (owner, title, content) => {
   contents.push({ id: nextId++, owner: owner, title: title, content: content });
@@ -33,21 +39,6 @@ const deletePost = (id) => {
   }
 };
 
-document.getElementById("addPostBtn").addEventListener("click", event => {
-  const div = document.getElementById("popUpToAddPost");
-  const main = document.querySelector("main");
-  main.classList.add("popUpHidden")
-  div.classList.remove("popUpHidden");
-  div.classList.add("showPopUp");
-  const header = document.querySelector("header");
-  header.style.display = "none";
-  history.pushState({ showPopUp: true }, "", "newPost");
-});
-
-window.addEventListener("popstate", (event) => {
-  location.reload();
-  history.pushState("main", "", "main.html");
-});
 
 const addQrCodeToPage = () => {
   if(contents.length !== 0) {
@@ -132,6 +123,18 @@ const getApi = async (post, title, update = false) => {
   }  
 };
 
+
+document.getElementById("addPostBtn").addEventListener("click", event => {
+  const div = document.getElementById("popUpToAddPost");
+  const main = document.querySelector("main");
+  main.classList.add("popUpHidden")
+  div.classList.remove("popUpHidden");
+  div.classList.add("showPopUp");
+  const header = document.querySelector("header");
+  header.style.display = "none";
+  history.pushState({ showPopUp: true }, "", "newPost");
+});
+
 document.getElementById("addPost").addEventListener("click", () => {
   const main = document.querySelector("main");
   main.innerHTML = ""; // Gambiarra
@@ -149,12 +152,11 @@ document.getElementById("addPost").addEventListener("click", () => {
   history.pushState("main", "", "main.html");
 });
 
+window.addEventListener("popstate", (event) => {
+  location.reload();
+  history.pushState("main", "", "main.html");
+});
+
 window.addEventListener("load", () => {
   document.querySelector("main").innerHTML = '<h1 id="nothingWasPosted">Nada foi postado ainda</h1>';
 });
-
-const userName = JSON.parse(sessionStorage.getItem("user")).userName;
-const span = document.createElement("span");
-span.textContent = userName;
-span.classList.add("userName");
-document.getElementById("userInfo").append(span);
