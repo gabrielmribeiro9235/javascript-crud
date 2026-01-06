@@ -1,6 +1,6 @@
 const createAccount = (user, pass) => {
     localStorage.setItem(user, JSON.stringify({ userName: user, password: pass }));
-    sessionStorage.setItem("user", JSON.stringify({ userName: user, password: pass }));
+    sessionStorage.setItem("user", JSON.stringify({ userName: user }));
     window.location.href = "./main.html";
 }
 
@@ -61,7 +61,7 @@ document.getElementById("loginForm").addEventListener("submit", event => {
     if(document.querySelector(".enterBtn").value === "Entrar") {
         const user = getUser(userName, password);
         if(user) {
-            sessionStorage.setItem("user", JSON.stringify({ userName, password }));
+            sessionStorage.setItem("user", JSON.stringify({ userName: userName }));
             window.location.href = "./main.html";
         }
     } else {
