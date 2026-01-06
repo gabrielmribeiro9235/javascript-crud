@@ -184,3 +184,8 @@ window.addEventListener("load", () => {
     document.querySelector("main").innerHTML = '<h1 id="nothingWasPosted">Nada foi postado ainda</h1>';
   }
 });
+
+window.addEventListener("beforeunload", () => {
+  localStorage.setItem(`${userName}Contents`, JSON.stringify(contents));
+  localStorage.setItem(`${userName}NextId`, nextId.toString());
+});
