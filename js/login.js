@@ -1,5 +1,6 @@
 const createAccount = (user, pass) => {
     localStorage.setItem(user, JSON.stringify({ userName: user, password: pass }));
+    sessionStorage.clear();
     sessionStorage.setItem("user", JSON.stringify({ userName: user }));
     window.location.href = "./main.html";
 }
@@ -65,7 +66,12 @@ document.getElementById("loginForm").addEventListener("submit", event => {
             window.location.href = "./main.html";
         }
     } else {
-        createAccount(userName, password);
+        if(getUser(userName, password)) {
+            location.reload();
+            alert("Usuário já existente");
+        } else {
+            createAccount(userName, password);
+        }
     }
 });
 
