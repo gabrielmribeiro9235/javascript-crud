@@ -1,6 +1,6 @@
 const contents = [];
-let nextId = Number(sessionStorage.getItem("nextId")) || 1;
 const userName = JSON.parse(sessionStorage.getItem("user")).userName;
+let nextId = Number(localStorage.getItem(`${userName}NextId`)) || 1;
 const span = document.createElement("span");
 span.textContent = userName;
 span.classList.add("userName");
@@ -169,7 +169,10 @@ window.addEventListener("popstate", (event) => {
 });
 
 window.addEventListener("load", () => {
-  const saved = sessionStorage.getItem("contents");
+  let saved = localStorage.getItem(`${userName}Contents`);
+  if(saved === "[]") {
+    saved = sessionStorage.getItem("contents");
+  }
   if(saved) {
     const parsed = JSON.parse(saved);
     if(parsed.length !== 0) {
