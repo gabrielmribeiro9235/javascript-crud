@@ -78,9 +78,22 @@ label{
     text-align: center;
     margin-top: -15px;
     font-size: smaller;
-    cursor: pointer;
 }
 
 #signUpLink {
     font-weight: bold;
+    cursor: pointer;
+}
+
+#logIn {
+    text-decoration: none;
+    color: white;
+    text-align: center;
+    margin-top: -15px;
+    font-size: smaller;
+}
+
+#logInLink {
+    font-weight: bold;
+    cursor: pointer;
 }

@@ -68,3 +68,29 @@ document.getElementById("loginForm").addEventListener("submit", event => {
         createAccount(userName, password);
     }
 });
+
+document.querySelector("a").addEventListener("click", (event) => {
+    const h1 = document.querySelector("h1");
+    const enterBtn = document.querySelector(".enterBtn");
+    const link = event.target;
+    const p = document.querySelector("p");
+    document.body.style.display = "none";
+    if (link.id === "signUpLink") {
+        h1.textContent = "Cadastro";
+        enterBtn.value = "Registre-se";
+        link.id = "logInLink";
+        link.textContent = "Entrar";
+        p.textContent = "Já tem uma conta? ";
+        p.append(link);
+    } else {
+        h1.textContent = "Login";
+        enterBtn.value = "Entrar";
+        link.id = "signUpLink";
+        link.textContent = "Registre-se";
+        p.textContent = "Não tem uma conta? ";
+        p.append(link);
+    }
+    setTimeout(() => {
+        document.body.removeAttribute("style");
+    }, 100);
+});
