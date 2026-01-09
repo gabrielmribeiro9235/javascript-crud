@@ -47,6 +47,7 @@ const deletePost = (id) => {
 const addQrCodeToPage = () => {
   if(contents.length !== 0) {
     document.querySelector("main").innerHTML = "";
+    contents.sort((a, b) => a.id - b.id);
     contents.forEach((post) => {
       const div = document.createElement("div");
       div.id = post.id;
