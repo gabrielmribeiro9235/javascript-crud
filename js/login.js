@@ -5,7 +5,7 @@ const createAccount = (user, pass) => {
     window.location.href = "./main.html";
 }
 
-const getUser = (user, pass) => {
+const getUser = (user, pass, signUpFlag = false) => {
     const storage = localStorage.getItem(user);
     if(storage) {
         const parsed = JSON.parse(storage);
@@ -16,11 +16,15 @@ const getUser = (user, pass) => {
             inputBox.removeAttribute("style");
             const oldMsgs = document.querySelectorAll(".error");
             oldMsgs.forEach(msg => msg.remove());
-            invalidPassword();
+            if(!signUpFlag) {
+                invalidPassword();
+            }
             return false;
         }
     } else {
-        invalidUser();
+        if(!signUpFlag) {
+            invalidUser();
+        }
         return false;
     }
 }; 
@@ -66,7 +70,7 @@ document.getElementById("loginForm").addEventListener("submit", event => {
             window.location.href = "./main.html";
         }
     } else {
-        if(getUser(userName, password)) {
+        if(getUser(userName, password, true)) {
             location.reload();
             alert("Usuário já existente");
         } else {
