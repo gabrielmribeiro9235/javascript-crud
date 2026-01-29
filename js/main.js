@@ -14,11 +14,6 @@ const createPost = (id = null, owner, title, content, rawContent) => {
   saveContens();
 };
 
-const getPostById = (id) => {
-  const foundPost = contents.find((post) => post.id === id);
-  return foundPost || "Não encontrado!";
-};
-
 const updatePost = (id, title, update, newContent) => {
   const foundPost = contents.find((post) => post.id === id);
   if (foundPost) {
