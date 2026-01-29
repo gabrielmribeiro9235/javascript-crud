@@ -99,4 +99,15 @@ document.querySelector("a").addEventListener("click", (event) => {
     setTimeout(() => {
         document.body.removeAttribute("style");
     }, 100);
+    const userMessage = document.querySelectorAll(".error");
+    userMessage.forEach(msg => msg.remove());
+    const passMessage = document.querySelectorAll(".error-pass");
+    passMessage.forEach(msg => msg.remove());
+    const inputBoxes = [document.getElementById("userName"), document.getElementById("password")]
+    inputBoxes.forEach(input => {
+        console.log(input);
+        input.style.borderColor = "white"
+        input.value = "";
+    });
+
 });
