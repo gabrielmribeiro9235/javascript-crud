@@ -230,7 +230,6 @@ main {
 }
 
 #confirm {
-    margin-top: 150px;
     background-color: black;
     color: white;
     font-weight: bold;
@@ -274,7 +273,6 @@ main {
 }
 
 #prompt {
-    margin-top: 150px;
     background-color: black;
     color: white;
     font-weight: bold;
@@ -332,4 +330,21 @@ main {
         background-color: red;
         color: white;
     }
+}
+
+#confirm, #prompt {
+    position: fixed;
+    top: -100%;
+    animation: dropDown 0.5s ease forwards;
+}
+
+@keyframes dropDown {
+  from {
+    top: -100%;
+    opacity: 0;
+  }
+  to {
+    top: -20%;
+    opacity: 1;
+  }
 }
