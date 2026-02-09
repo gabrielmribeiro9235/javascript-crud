@@ -52,6 +52,29 @@ const showConfirm = (message) => {
   })
 };
 
+const showPrompt = (oldTitle, oldContent) => {
+  return new Promise((resolve) => {
+    const dialog = document.getElementById("prompt");
+    const titleInput = document.getElementById("titleInput");
+    const contentInput = document.getElementById("contentInput");
+    dialog.showModal();
+    titleInput.value = oldTitle;
+    contentInput.value = oldContent;
+    document.getElementById("prompt-submit").addEventListener("click", (e) => {
+      e.preventDefault();
+      dialog.close();
+      if(!titleInput.value && !contentInput.value) {
+        resolve(false);
+      }
+      resolve({ newTitle: titleInput.value, newContent: contentInput.value });
+    });
+    document.getElementById("prompt-cancel").addEventListener("click", () => {
+      dialog.close();
+      resolve(false);
+    })
+  })
+};
+
 
 const addQrCodeToPage = () => {
   if(contents.length !== 0) {
@@ -90,25 +113,23 @@ const addQrCodeToPage = () => {
       });
       updateButton.addEventListener("click", async () => {
         const postDiv = updateButton.closest(".postInPage");
-        const h2 = postDiv.querySelector("h2");
-        let newTitle = h2.textContent;
-        const changeTitle = confirm("Quer trocar o título?");
-        if(changeTitle) {
-          newTitle = prompt("Digite aqui o novo título:");
-        }
-        const changeContent = confirm("Quer trocar o conteúdo?");
-        if(changeContent) {
-          const newContent = prompt("Digite aqui o novo conteúdo:");
-          if(newContent) {
+        const foundPost = contents.find(post => post.id === Number(postDiv.id));
+        let newTitle, newContent;
+        const oldTitle = foundPost.title, oldContent = foundPost.rawContent;
+        const promptResponse = await showPrompt(oldTitle, oldContent);
+        if(promptResponse) {
+          newTitle = promptResponse.newTitle;
+          newContent = promptResponse.newContent;
+          if(newContent === oldContent) {
+            if(newTitle !== oldTitle) {
+              const h2 = postDiv.querySelector("h2");
+              h2.textContent = newTitle;
+              foundPost.title = newTitle;
+              saveContents();
+            }
+          } else {
             const newQrCode = await getApi(newContent, newTitle, true);
-            updatePost(Number(postDiv.id), newTitle, newQrCode, newContent);
-          }
-        } else {
-          if (newTitle !== h2.textContent) {
-            h2.textContent = newTitle;
-            const foundPost = contents.find(post => post.id === Number(postDiv.id));
-            foundPost.title = newTitle;
-            saveContens();
+            updatePost(Number(postDiv.id), newTitle, newQrCode, newContent);  
           }
         }
       });

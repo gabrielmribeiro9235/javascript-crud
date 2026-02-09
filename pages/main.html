@@ -14,6 +14,19 @@
             <button id="confirm-no">Não</button>
         </div>
     </dialog>
+    <dialog id="prompt">
+        <h2>Edite o post</h2>
+        <form method="dialog">
+            <label for="titleInput">Título:</label>
+            <input required type="text" id="titleInput" placeholder="Digite o novo título" spellcheck="false" autocomplete="off">
+            <label for="contentInput">Conteúdo:</label>
+            <textarea required type="text" id="contentInput" placeholder="Digite o novo conteúdo" spellcheck="false" autocomplete="off"></textarea>
+            <div class="promptButtons">
+                <button type="submit" id="prompt-submit">Enviar</button>
+                <button type="button" id="prompt-cancel">Cancelar</button>
+            </div>
+        </form>
+    </dialog>
     <header>
         <div id="iconAndUserName">
             <span>
