@@ -300,10 +300,14 @@ main {
             padding: 8px 10px;
             font-size: 16px;
         }
+        #contentInput {
+            text-wrap: inherit;
+            resize: none;
+        }
     } 
     .promptButtons {
         display: flex;
-        gap: 10px;
+        justify-content: space-between;
         margin: 15px 0;
     }
     button {
