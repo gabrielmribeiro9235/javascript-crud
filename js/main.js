@@ -22,9 +22,6 @@ const updatePost = (id, title, update, newContent) => {
     foundPost.rawContent = newContent
     saveContens();
     addQrCodeToPage();
-    alert("Alteração feita com sucesso!")
-  } else {
-    alert("Nada foi alterado!");
   }
 };
 
@@ -144,7 +141,7 @@ document.getElementById("addPostBtn").addEventListener("click", event => {
 
 document.getElementById("addPost").addEventListener("click", () => {
   const main = document.querySelector("main");
-  main.innerHTML = ""; // Gambiarra
+  main.innerHTML = "";
   const title = document.getElementById("postTitle").value;
   const content = document.getElementById("postContent").value; 
   content && title ? getApi(content, title) : addQrCodeToPage();
