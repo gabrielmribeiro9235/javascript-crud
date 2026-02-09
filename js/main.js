@@ -25,14 +25,31 @@ const updatePost = (id, title, update, newContent) => {
   }
 };
 
-const deletePost = (id) => {
+const deletePost = async (id) => {
   const index = contents.findIndex((post) => post.id === id);
-  const option = confirm("Tem certeza que quer excluir o post?");
+  const option = await showConfirm("Tem certeza que quer excluir o post?");
   if (index !== -1 && option) {
     contents.splice(index, 1);
     saveContens();
     addQrCodeToPage();
   }
+};
+
+const showConfirm = (message) => {
+  return new Promise((resolve) => {
+    const dialog = document.getElementById("confirm");
+    const p = document.getElementById("confirmText");
+    p.textContent = message;
+    dialog.showModal();
+    document.getElementById("confirm-yes").addEventListener("click", () => {
+      dialog.close();
+      resolve(true);
+    }, { once: true });
+    document.getElementById("confirm-no").addEventListener("click", () => {
+      dialog.close();
+      resolve(false);
+    }, { once: true })
+  })
 };
 
 
